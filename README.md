@@ -16,18 +16,18 @@
 
 # Tools
 
-- Jest
+- **Jest**
   Jest acts as a test runner, assertion library, and mocking library, also provide snapshot testing.
-- react-testing-library
+- **react-testing-library**
   rendering a component (or multiple components), finding elements, and interacting with elements
-- Cypress
+- **Cypress**
   E2E
 
 # react-testing-library
 
-- render
+- **render**
   renders a React element into the DOM and returns utility functions for testing the component
-- rerender
+- **rerender**
   It'd probably be better if you test the component that's doing the prop updating to ensure that the props are being updated correctly
 
 ```
@@ -38,15 +38,15 @@ rerender(<NumberDisplay number={2} />)
 
 ```
 
-- custom render
+- **custom render**
   It's often useful to define a custom render method that includes things like global context providers, data stores, etc
 
-- query
+- **query**
   different querySelectors https://testing-library.com/docs/dom-testing-library/api-queries
 
 use `screen` for pages.
 
-- events
+- **events**
 
 ```
 
@@ -71,7 +71,7 @@ https://testing-library.com/docs/dom-testing-library/api-events
 
 # Jest
 
-- Mocking
+- **Mocking**
   You may simply want to check that a function passed as props is successfully called.
 
 ```
@@ -162,7 +162,3 @@ jest --updateSnapshot
 https://testing-library.com/docs/dom-testing-library/api-queries
 https://jestjs.io/docs/en/getting-started
 https://www.apollographql.com/docs/react/development-testing/testing/
-
-```
-
-```
