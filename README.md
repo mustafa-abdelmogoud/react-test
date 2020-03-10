@@ -113,12 +113,49 @@ component.unmount();
 
 ```
 
+# Test Apollo
+
+```
+import { MockedProvider } from '@apollo/react-testing';
+import { GET_DOG_QUERY, Dog } from './dog';
+
+const mocks = [
+  {
+    request: {
+      query: GET_DOG_QUERY,
+      variables: {
+        name: 'Buck',
+      },
+    },
+    result: {
+      data: {
+        dog: { id: '1', name: 'Buck', breed: 'bulldog' },
+      },
+    },
+  },
+];
+
+it('renders without error', () => {
+  renderer.create(
+    <MockedProvider mocks={mocks} addTypename={false}>
+      <Dog name="Buck" />
+    </MockedProvider>,
+  );
+});
+```
+
 # How to organize your test
 
 Test for Behavior & appearance
 don't test implementation details
 
 # snapshot testing
+
+Snapshot tests are a very useful tool whenever you want to make sure your UI does not change unexpectedly
+
+```
+jest --updateSnapshot
+```
 
 # resources
 
