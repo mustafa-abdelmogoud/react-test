@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`match a snapshot 1`] = `
+<div>
+  <div
+    class="App"
+  >
+    <h1
+      data-testid="counter"
+    >
+      0
+    </h1>
+    <button
+      data-testid="increment"
+    >
+      +
+    </button>
+    <button
+      data-testid="decrement"
+    >
+      -
+    </button>
+  </div>
+</div>
+`;

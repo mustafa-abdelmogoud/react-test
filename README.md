@@ -2,84 +2,68 @@
 
 # Overview
 
-# different testing methodologies
+# Tests
+
+- Unit test
+- integration test
+- E2E test
+
+# TDD overview
 
 # Tools
 
 - Jest
   Jest acts as a test runner, assertion library, and mocking library, also provide snapshot testing.
-- Enzym
+- react-testing-library
   rendering a component (or multiple components), finding elements, and interacting with elements
 - Cypress
+  E2E
 
-# Install
-
-Jest is already installed by CRA
-
-```
-yarn add -D enzyme enzyme-adapter-react-16 enzyme-to-json
-```
-
-update package.json
-
-```
-"jest": {
-  "snapshotSerializers": ["enzyme-to-json/serializer"]
-}
-```
-
-emzyme-to-json: provides better serialization for snapshot comparison.
-snapshotSerializers: allow you to pass react component to toMachSnapshot without toJson()
-
-add setupTests.js
-
-```
-import { configure } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
-configure({ adapter: new Adapter() });
-```
-
-if not using CRA add this line to package.json
-
-```
-"setupFiles": ["./src/setupTests.js"]
-```
-
-# Enzyme
-
-- mount:
-
-* Full DOM rendering including child components
-* Ideal for use cases where you have components that may interact with DOM API, or use React lifecycle methods in order to fully test the component
-* As it actually mounts the component in the DOM .unmount() should be called after each tests to stop tests affecting each other
-* Allows access to both props directly passed into the root component (including default props) and props passed into child components
-
-- shallow
-
-* Renders only the single component, not including its children. This is useful to isolate the component for pure unit testing. It protects against changes or bugs in a child component altering the behaviour or output of the component under test
-* As of Enzyme 3 shallow components do have access to lifecycle methods by default
-* Cannot access props passed into the root component (therefore also not default props), but can those passed into child components, and can test the effect of props passed into the root component. This is as with shallow(<MyComponent />), you're testing what MyComponent renders - not the element you passed into shallow
+# react-testing-library
 
 - render
-
-* Renders to static HTML, including children
-* Does not have access to React lifecycle methods
-* Less costly than mount but provides less functionality
-
-- Events
-
-The Enzyme API has several ways to simulate events or user interactions. If you are wanting to test interacting with a child component then the mount method can be used.
+  renders a React element into the DOM and returns utility functions for testing the component
+- rerender
+  It'd probably be better if you test the component that's doing the prop updating to ensure that the props are being updated correctly
 
 ```
-it('should be possible to activate button with Spacebar', () => {
-  const component = mount(<MyComponent />);
-  component
-    .find('button#my-button-one')
-    .simulate('keydown', { keyCode: 32 });
-  expect(component).toMatchSnapshot();
-  component.unmount();
-});
+import { render } from '@testing-library/react'
+const { rerender } = render(<NumberDisplay number={1} />)
+// re-render the same component with different props
+rerender(<NumberDisplay number={2} />)
+
 ```
+
+- custom render
+  It's often useful to define a custom render method that includes things like global context providers, data stores, etc
+
+- query
+  different querySelectors https://testing-library.com/docs/dom-testing-library/api-queries
+
+use `screen` for pages.
+
+- events
+
+```
+
+fireEvent.click(DOMElement)
+
+fireEvent.change(DOMElement, { target: { value: '23' } })
+
+```
+
+Consider fireEvent.click which creates a click event and dispatches that event on the given DOM node. This works properly for most situations when you simply want to test what happens when your element is clicked, but when the user actually clicks your element, these are the events that are typically fired (in order):
+
+fireEvent.mouseOver(element)
+fireEvent.mouseMove(element)
+fireEvent.mouseDown(element)
+element.focus() (if that element is focusable)
+fireEvent.mouseUp(element)
+fireEvent.click(element)
+
+This part should be covered by the E2E test.
+
+https://testing-library.com/docs/dom-testing-library/api-events
 
 # Jest
 
@@ -87,38 +71,57 @@ it('should be possible to activate button with Spacebar', () => {
   You may simply want to check that a function passed as props is successfully called.
 
 ```
+
 const clickFn = jest.fn();
 describe('MyComponent', () => {
-  it('button click should hide component', () => {
-    const component = shallow(<MyComponent onClick={clickFn} />);
-    component
-      .find('button#my-button-two')
-      .simulate('click');
-    expect(clickFn).toHaveBeenCalled();
-  });
+it('button click should hide component', () => {
+const component = shallow(<MyComponent onClick={clickFn} />);
+component
+.find('button#my-button-two')
+.simulate('click');
+expect(clickFn).toHaveBeenCalled();
 });
+});
+
 ```
 
 ```
+
 const mockTryGetValue = jest.fn(() => false);
 const mockTrySetValue = jest.fn();
 
 jest.mock('save-to-storage', () => ({
-  SaveToStorage: jest.fn().mockImplementation(() => ({
-    tryGetValue: mockTryGetValue,
-    trySetValue: mockTrySetValue,
-  })),
+SaveToStorage: jest.fn().mockImplementation(() => ({
+tryGetValue: mockTryGetValue,
+trySetValue: mockTrySetValue,
+})),
 }));
 describe('MyComponent', () => {
-  it('should set storage on save button click', () => {
-    mockTryGetValue.mockReturnValueOnce(true);
-    const component = mount(<MyComponent />);
-    component.find('button#my-button-three').simulate('click');
-    expect(mockTryGetValue).toHaveBeenCalled();
-    expect(component).toMatchSnapshot();
-    component.unmount();
-  });
+it('should set storage on save button click', () => {
+mockTryGetValue.mockReturnValueOnce(true);
+const component = mount(<MyComponent />);
+component.find('button#my-button-three').simulate('click');
+expect(mockTryGetValue).toHaveBeenCalled();
+expect(component).toMatchSnapshot();
+component.unmount();
 });
+});
+
 ```
 
-# Snapshot testing
+# How to organize your test
+
+Test for Behavior & appearance
+don't test implementation details
+
+# snapshot testing
+
+# resources
+
+https://testing-library.com/docs/dom-testing-library/api-queries
+https://jestjs.io/docs/en/getting-started
+https://www.apollographql.com/docs/react/development-testing/testing/
+
+```
+
+```
