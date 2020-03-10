@@ -10,6 +10,10 @@
 
 # TDD overview
 
+- red
+- green
+- refactor
+
 # Tools
 
 - Jest
