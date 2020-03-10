@@ -159,6 +159,6 @@ jest --updateSnapshot
 
 # resources
 
-https://testing-library.com/docs/dom-testing-library/api-queries
-https://jestjs.io/docs/en/getting-started
-https://www.apollographql.com/docs/react/development-testing/testing/
+- https://testing-library.com/docs/dom-testing-library/api-queries*
+- https://jestjs.io/docs/en/getting-started
+- https://www.apollographql.com/docs/react/development-testing/testing/
