@@ -7,14 +7,15 @@ exports[`match a snapshot 1`] = `
   >
     <h1
       data-testid="counter"
+      style="color: red;"
     >
       0
     </h1>
-    <button
+    <p
       data-testid="increment"
     >
       +
-    </button>
+    </p>
     <button
       data-testid="decrement"
     >

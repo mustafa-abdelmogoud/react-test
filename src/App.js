@@ -5,10 +5,12 @@ function App() {
   const [counter, setCounter] = useState(0);
   return (
     <div className="App">
-      <h1 data-testid="counter">{counter}</h1>
-      <button data-testid="increment" onClick={() => setCounter(counter + 1)}>
+      <h1 style={{ color: "red" }} data-testid="counter">
+        {counter}
+      </h1>
+      <p data-testid="increment" onClick={() => setCounter(counter + 1)}>
         +
-      </button>
+      </p>
       <button data-testid="decrement" onClick={() => setCounter(counter - 1)}>
         -
       </button>

@@ -58,12 +58,12 @@ fireEvent.change(DOMElement, { target: { value: '23' } })
 
 Consider fireEvent.click which creates a click event and dispatches that event on the given DOM node. This works properly for most situations when you simply want to test what happens when your element is clicked, but when the user actually clicks your element, these are the events that are typically fired (in order):
 
-fireEvent.mouseOver(element)
-fireEvent.mouseMove(element)
-fireEvent.mouseDown(element)
-element.focus() (if that element is focusable)
-fireEvent.mouseUp(element)
-fireEvent.click(element)
+- fireEvent.mouseOver(element)
+- fireEvent.mouseMove(element)
+- fireEvent.mouseDown(element)
+- element.focus() (if that element is focusable)
+- fireEvent.mouseUp(element)
+- fireEvent.click(element)
 
 This part should be covered by the E2E test.
 
